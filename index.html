@@ -1,16 +1,31 @@
-<html>
+<html ng-app>
 <head>
 	<title>Angular Brown - Bag Sessions</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
 </head>
-<body>
+<body ng-controller="BrownBagController">
 
 	<div class="container">
 
 		<div class="row">
 
 			<div class="col-md-12">
-				<h1>CBU Brown Bag Sessions</h1>
+				<h1>CBU Brown Bag Session</h1>
+			</div>
+
+		</div>
+
+		<div class="row" ng-repeat="session in sessions">
+
+			<div class="col-md-2">
+				<button ng-click="upVote(session)"><i class="glyphicon glyphicon-chevron-up"></i></button>
+				<button ng-click="downVote(session)"><i class="glyphicon glyphicon-chevron-down"></i></button>
+				<h3>{{session.votes}}</h3>
+			</div>
+
+			<div class="col-md-10">
+				<h2>{{session.name}}</h2>
+				<p><strong>Speakers:</strong> <span ng-repeat="speaker in session.speakers">{{speaker}}, </span></p>
 			</div>
 
 		</div>
@@ -20,5 +35,35 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		function BrownBagController($scope) {
+			
+			var _sessions = [
+			   {
+			      "name": "Bootstrap & Angular",
+			      "date": "24.09.2014",
+			      "time": "9:30 AM",
+			      "location": "Hunter Valley",
+			      "speakers": [
+			         "Pauline Dizon",
+			         "Manish Kumar",
+			         "Simon Harloff"
+			      ],
+			      "votes": 0
+			   }
+			];
+
+			$scope.sessions = _sessions;
+
+			$scope.upVote = function upVote(session) {
+				session.votes++;
+			};
+
+			$scope.downVote = function downVote(session) {
+				session.votes--;
+			};
+
+		}
+	</script>
 </body>
 </html>
